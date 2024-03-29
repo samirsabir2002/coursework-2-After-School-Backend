@@ -32,6 +32,9 @@ let app = new Vue({
     ],
     sortBy: "subject",
     sortOrder: "asc",
+    searchValue: "",
+    name: "",
+    phone: "",
     Order: {
       FirstName: "",
       Lastname: "",
@@ -49,8 +52,11 @@ let app = new Vue({
       AR: "Arizona",
       CA: "California",
       NV: "Neveda"
-    }
-  },
+    },
+    searchText: "",
+    searchResults: []
+  }, // Removed the watch property as a computed property
+
   methods: {
     AddToCartBtn: function(product) {
       console.log(product);
@@ -96,7 +102,20 @@ let app = new Vue({
       return this.Cart;
     },
     sortedLessons() {
-      const lessonsCopy = this.Product; // Avoid mutating original data
+      let lessonsCopy = this.Product;
+      if (this.searchValue) {
+        let searchTermLower = this.searchValue.trim().toLowerCase(); // Ensure trimmed search term
+        lessonsCopy = lessonsCopy.filter(item => {
+          const subjectLower = item.subject?.toLowerCase();
+          const locationUpper = item.location?.toUpperCase(); // Consistent case conversion for location
+
+          // Search for case-insensitive matches in subject and location
+          return (
+            subjectLower?.includes(searchTermLower) ||
+            locationUpper?.includes(searchTermLower)
+          );
+        });
+      } // Avoid mutating original data
       return lessonsCopy.sort((a, b) => {
         let comparison = 0;
         switch (this.sortBy) {

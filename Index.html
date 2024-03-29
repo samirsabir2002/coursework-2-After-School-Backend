@@ -42,19 +42,27 @@
       <div v-if="ShowProduct" class="">
         <div class="container my-5">
           <div class="row justify-content-evenly">
-            <div>
-              <h2>Lessons</h2>
-              <select v-model="sortBy">
-                <option value="subject">Subject</option>
-                <option value="location">Location</option>
-                <option value="price">Price</option>
-                <option value="spaces">Spaces</option>
-              </select>
-              <select v-model="sortOrder">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-              </select>
-            </div>
+            <template>
+              <div>
+                <h2>Lessons</h2>
+                <select v-model="sortBy">
+                  <option value="subject">Subject</option>
+                  <option value="location">Location</option>
+                  <option value="price">Price</option>
+                  <option value="spaces">Spaces</option>
+                </select>
+                <select v-model="sortOrder">
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+                <input
+                  type="text"
+                  v-model="searchValue"
+                  placeholder="Search Lesson"
+                  id="search-input"
+                />
+              </div>
+            </template>
             <div
               v-for="item in sortedLessons"
               class="my-3 col-sm-6 col-md-4"
