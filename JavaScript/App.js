@@ -4,31 +4,10 @@ let app = new Vue({
   el: "#app",
   data: {
     sitename: "After School",
-    Product: myArray,
-    // Product: [
-    //   {
-    //     id: 14,
-    //     subject: "Cooking",
-    //     // location: "Home Economics Room",
-    //     price: 15,
-    //     picture: "[Image of tempera paint set]",
-    //     availability: 12,
-    //     rating: 2,
-    //     description:
-    //       "Cooking Club: Learn basic cooking skills and create delicious dishes. Fee covers ingredients."
-    //   }
-    // ],
+    Product:myArray,
     ShowProduct: true,
     Cart: [
-      // {
-      //   id: 10,
-      //   title: "Tommy",
-      //   description:
-      //     " Some quick example text to build on the card title and make upthe bulk of the card's content.",
-      //   price: 500,
-      //   image: "Images/lucas-ludwig-CMnikGdcIjo-unsplash.jpg",
-      //   availableInventory: 5
-      // }
+    
     ],
     sortBy: "subject",
     sortOrder: "asc",
@@ -55,7 +34,7 @@ let app = new Vue({
     },
     searchText: "",
     searchResults: []
-  }, // Removed the watch property as a computed property
+  }, 
 
   methods: {
     AddToCartBtn: function(product) {
@@ -70,12 +49,11 @@ let app = new Vue({
       }
     },
     showCheckout: function() {
-      // SumOfTotalProduct();
+      
       this.ShowProduct = !this.ShowProduct;
     },
     SubmitBtn: function() {
       event.preventDefault();
-      // alert("Order Placed !");
     },
     CanAddToCart: function(product) {
       return product.availability != 0 > this.CartCount(product.id);
@@ -102,18 +80,18 @@ let app = new Vue({
     sortedLessons() {
       let lessonsCopy = this.Product;
       if (this.searchValue) {
-        let searchTermLower = this.searchValue.trim().toLowerCase(); // Ensure trimmed search term
+        let searchTermLower = this.searchValue.trim().toLowerCase(); 
         lessonsCopy = lessonsCopy.filter(item => {
           const subjectLower = item.subject?.toLowerCase();
-          const locationUpper = item.location?.toUpperCase(); // Consistent case conversion for location
+          const locationUpper = item.location?.toUpperCase(); n
 
-          // Search for case-insensitive matches in subject and location
+      
           return (
             subjectLower?.includes(searchTermLower) ||
             locationUpper?.includes(searchTermLower)
           );
         });
-      } // Avoid mutating original data
+      } 
       return lessonsCopy.sort((a, b) => {
         let comparison = 0;
         switch (this.sortBy) {
