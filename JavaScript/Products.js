@@ -4,7 +4,7 @@ const Products = [
     subject: "Arts & Crafts",
     location: "Art Room",
     price: 7,
-    picture: "../Images/Acting-amico.svg",
+    picture: "../Images/Painting Easter eggs-rafiki.svg",
     availability: 10,
     description:
       "Tempera Paint Set: This 12-color set is perfect for young artists to explore their creativity. Includes washable paints, brushes, and a mixing palette."
@@ -14,7 +14,7 @@ const Products = [
     subject: "Coding",
     location: "Computer Lab",
     price: 25,
-    picture: "[Image of Snap Circuits electronics kit]",
+    picture: "../Images/Programming-amico (1).svg",
     availability: 8,
     description:
       "Snap Circuits Electronics Kit: Learn the basics of electronics with this fun and educational kit. Build working circuits without soldering!"
@@ -24,7 +24,7 @@ const Products = [
     subject: "Creative Writing",
     location: "Library",
     price: 3,
-    picture: "[Image of lined notebooks]",
+    picture: "../Images/Creative writing-rafiki.svg",
     availability: 15,
     description:
       "Lined Notebooks: Pack of 3 notebooks for writing stories, poems, and anything else your imagination dreams up."
@@ -34,7 +34,7 @@ const Products = [
     subject: "Board Games",
     location: "Multipurpose Room",
     price: 8,
-    picture: "[Image of Scrabble board game]",
+    picture: "../Images/Playing with dreidels-bro (1).svg",
     availability: 5,
     description:
       "Scrabble Board Game: A classic game of wordplay and strategy. Perfect for building vocabulary and having fun with friends."
@@ -44,7 +44,7 @@ const Products = [
     subject: "Drama",
     location: "Auditorium",
     price: 5,
-    picture: "[Image of improvisation dice]",
+    picture: "../Images/Acting-amico (1).svg",
     availability: 12,
     description:
       "Improvisation Dice: Spark your creativity with these story-telling dice. Roll the dice and see what scenes you can create!"
@@ -54,7 +54,7 @@ const Products = [
     subject: "Gardening",
     location: "School Garden",
     price: 6,
-    picture: "[Image of gardening gloves]",
+    picture: "../Images/Gardening-rafiki (1).svg",
     availability: 10,
     description:
       "Gardening Gloves: Protect your hands while planting, weeding, and caring for your garden."
@@ -64,7 +64,7 @@ const Products = [
     subject: "Music",
     location: "Music Room",
     price: 8,
-    picture: "[Image of tambourines]",
+    picture: "../Images/Music-rafiki (1).svg",
     availability: 8,
     description:
       "Tambourines: Make some noise and learn the rhythm with these fun percussion instruments."
@@ -74,7 +74,7 @@ const Products = [
     subject: "Robotics",
     location: "Makerspace",
     price: 40,
-    picture: "[Image of basic robotics kit]",
+    picture: "../Images/Robotics-rafiki.svg",
     availability: 5,
     description:
       "Basic Robotics Kit: Build and program your own robots with this introductory kit. Learn about motors, sensors, and coding."
@@ -84,7 +84,7 @@ const Products = [
     subject: "Science",
     location: "Science Lab",
     price: 15,
-    picture: "[Image of chemistry set]",
+    picture: "../Images/chemistry lab-rafiki.svg",
     availability: 7,
     description:
       "Chemistry Set (Safe for Kids): Conduct safe and exciting experiments to learn about the properties of matter and chemical reactions."
@@ -94,7 +94,7 @@ const Products = [
     subject: "Sports",
     location: "Gym",
     price: 10,
-    picture: "[Image of soccer ball]",
+    picture: "../Images/Sport family-rafiki.svg",
     availability: 12,
     description:
       "Sports Club: Participate in various sports activities throughout the year. Fee covers equipment and uniforms."
@@ -104,7 +104,7 @@ const Products = [
     subject: "Yoga",
     location: "Multipurpose Room",
     price: 10,
-    picture: "[Image of yoga mat]",
+    picture: "../Images/Yoga with face masks-rafiki.svg",
     availability: 15,
     description:
       "Yoga Mat: Find your inner zen with this comfortable and supportive yoga mat. Great for relaxation and stretching."
@@ -115,7 +115,7 @@ const Products = [
     subject: "Debate",
     location: "Library",
     price: 2,
-    picture: "[Image of debate podium]",
+    picture: "../Images/Political debate-rafiki.svg",
     availability: 12,
     description:
       "Debate Club: No fee required! Join us to learn research skills, public speaking, and critical thinking."
@@ -125,7 +125,7 @@ const Products = [
     subject: "Chess Club",
     location: "Multipurpose Room",
     price: 3,
-    picture: "[Image of chess   ]",
+    picture: "../Images/Chess-rafiki.svg",
     availability: 11,
     description:
       "Chess Club: No fee required! Learn the game of chess, improve your strategy, and challenge your friends."
@@ -135,7 +135,7 @@ const Products = [
     subject: "Cooking",
     location: "Home Economics Room",
     price: 15,
-    picture: "[Image of chef's hat]",
+    picture: "../Images/Cooking-rafiki.svg",
     availability: 12,
     description:
       "Cooking Club: Learn basic cooking skills and create delicious dishes. Fee covers ingredients."
@@ -145,7 +145,7 @@ const Products = [
     subject: "Filmmaking",
     location: "Media Lab",
     price: 20,
-    picture: "[Image of mini tripod]",
+    picture: "../Images/Recording a movie-rafiki.svg",
     availability: 8,
     description:
       "Filmmaking Club: Learn the basics of storytelling, filming, and editing. Create your own short films with the club's equipment."

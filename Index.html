@@ -129,14 +129,12 @@
             </div>
             <div>
               <div class="container">
-                <h2>Checkout</h2>
-
                 <div v-if="Cart.length">
                   <ul class="list-group">
                     <li
                       v-for="item in Cart"
                       :key="item.id"
-                      class="list-group-item"
+                      class="list-group-item my-2"
                     >
                       {{ item.subject }} ({{ item.availability }} available)
                       <span class="float-end">
