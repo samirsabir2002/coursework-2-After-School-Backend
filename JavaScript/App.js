@@ -63,6 +63,12 @@ let app = new Vue({
       this.Cart.push(product);
       product.availability--;
     },
+    removeFromCart: function (item) {
+      const index = this.Cart.findIndex(cartItem => cartItem.id === item.id);
+      if (index !== -1) {
+        this.Cart.splice(index, 1);
+      }
+    },
     showCheckout: function() {
       // SumOfTotalProduct();
       this.ShowProduct = !this.ShowProduct;
@@ -88,19 +94,11 @@ let app = new Vue({
     CartItemCount: function() {
       return this.Cart.length || "0";
     },
-
-    SumOfTotalProduct: function() {
-      this.Cart.forEach(element => {
-        const total = element.price * this.CartItemCount;
-        this.Cart[element.title || element.id] = this.Cart[
-          element.subject || element.Id
-        ]
-          ? this.Cart[element.subject || element.id] + total
-          : total;
-      });
-      console.log(this.Cart);
-      return this.Cart;
+    cartTotal() {
+      return this.Cart.reduce((sum, item) => sum + (item.price * item.availability), 0);
     },
+  
+   
     sortedLessons() {
       let lessonsCopy = this.Product;
       if (this.searchValue) {
