@@ -42,27 +42,43 @@
       <div v-if="ShowProduct" class="">
         <div class="container my-5">
           <div class="row justify-content-evenly">
-            <template>
-              <div>
+            <div>
+              <div class="container">
                 <h2>Lessons</h2>
-                <select v-model="sortBy">
-                  <option value="subject">Subject</option>
-                  <option value="location">Location</option>
-                  <option value="price">Price</option>
-                  <option value="spaces">Spaces</option>
-                </select>
-                <select v-model="sortOrder">
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
-                </select>
-                <input
-                  type="text"
-                  v-model="searchValue"
-                  placeholder="Search Lesson"
-                  id="search-input"
-                />
+                <div class="row align-items-center mb-3">
+                  <div class="col-md-3">
+                    <select v-model="sortBy" class="form-select form-select-sm">
+                      <option value="subject">Subject</option>
+                      <option value="location">Location</option>
+                      <option value="price">Price</option>
+                      <option value="spaces">Spaces</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <select
+                      v-model="sortOrder"
+                      class="form-select form-select-sm"
+                    >
+                      <option value="asc">Ascending</option>
+                      <option value="desc">Descending</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 d-flex align-items-center">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        v-model="searchValue"
+                        placeholder="Search Lesson"
+                        id="search-input"
+                        class="form-control form-control-sm"
+                        aria-describedby="searchButton"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </template>
+            </div>
+
             <div
               v-for="item in sortedLessons"
               class="my-3 col-sm-6 col-md-4"
@@ -90,19 +106,19 @@
                         </p>
                       </div>
                       <div class="col-md-10 fw-bold">
+                        location : {{item.location}}
+                      </div>
+                      <div class="col-md-10 fw-bold">
                         available Inventory : {{item.availability}}
                       </div>
                       <div class="col-2">
                         <i class="bi bi-bookmark-plus fs-2"></i>
                       </div>
                     </div>
-                  </div>
-                  <div class="row align-items-center text-center g-0">
-                    <div class="col-8">
-                      <h5>Price:</h5>
-                    </div>
-                    <div class="col-4">
-                      <h5>{{ item.price }}AED</h5>
+                    <div class="row align-items-center text-start g-0">
+                      <div class="col-md-12">
+                        <h5>Price: {{ item.price }}AED</h5>
+                      </div>
                     </div>
 
                     <a
@@ -151,8 +167,44 @@
 
                   <div class="text-right">
                     <h5>Total: AED {{ cartTotal }}</h5>
-                    <button type="button" class="btn btn-primary">
-                      Place Order
+                    <div class="row">
+                      <div class="col-6 mb-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Email address</label
+                        >
+                        <input
+                          type="text"
+                          v-model.number="name"
+                          required
+                          type="email"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Name"
+                        />
+                      </div>
+                      <div class="mb-3 col-6">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Phone Number</label
+                        >
+                        <input
+                          type="number"
+                          v-model.trim="phone"
+                          required
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Phone Number"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      :disabled="!name || !phone"
+                      type="button"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#placeordermodal"
+                    >
+                      Check Out
                     </button>
                   </div>
                 </div>
@@ -163,10 +215,54 @@
               </div>
             </div>
           </div>
+
+          <div
+            class="modal fade"
+            id="placeordermodal"
+            tabindex="-1"
+            aria-labelledby="placeordermodalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="placeordermodalLabel">
+                    Order Confirmation
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">Order Has Been Placed</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </body>
 </html>
+<script
+  src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+  integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+  integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+  crossorigin="anonymous"
+></script>
 <script type="module" src="JavaScript/App.js"></script>
 <script type="module" src="JavaScript/Products.js"></script>
