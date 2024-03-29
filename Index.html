@@ -40,6 +40,9 @@
         </nav>
       </header>
       <div v-if="ShowProduct" class="">
+        <div class="banner">
+          <img src="Images/banner.png" alt="Banner Image Description" />
+        </div>
         <div class="container my-5">
           <div class="row justify-content-evenly">
             <div>
@@ -266,3 +269,14 @@
 ></script>
 <script type="module" src="JavaScript/App.js"></script>
 <script type="module" src="JavaScript/Products.js"></script>
+<style>
+  .banner {
+    background-size: cover;
+    width: 100%; /* Set width to 100% viewport width */
+    height: auto; /* Set height to 100% viewport height */
+  }
+
+  .banner img {
+    width: 100%; /* Set image width to 100% of banner width */
+  }
+</style>
