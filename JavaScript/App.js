@@ -83,7 +83,7 @@ let app = new Vue({
         let searchTermLower = this.searchValue.trim().toLowerCase(); 
         lessonsCopy = lessonsCopy.filter(item => {
           const subjectLower = item.subject?.toLowerCase();
-          const locationUpper = item.location?.toUpperCase(); n
+          const locationUpper = item.location?.toUpperCase(); 
 
       
           return (
