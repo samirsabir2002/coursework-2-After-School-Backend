@@ -4,11 +4,9 @@ let app = new Vue({
   el: "#app",
   data: {
     sitename: "After School",
-    Product:myArray,
+    Product: myArray,
     ShowProduct: true,
-    Cart: [
-    
-    ],
+    Cart: [],
     sortBy: "subject",
     sortOrder: "asc",
     searchValue: "",
@@ -34,7 +32,7 @@ let app = new Vue({
     },
     searchText: "",
     searchResults: []
-  }, 
+  },
 
   methods: {
     AddToCartBtn: function(product) {
@@ -42,14 +40,13 @@ let app = new Vue({
       this.Cart.push(product);
       product.availability--;
     },
-    removeFromCart: function (item) {
+    removeFromCart: function(item) {
       const index = this.Cart.findIndex(cartItem => cartItem.id === item.id);
       if (index !== -1) {
         this.Cart.splice(index, 1);
       }
     },
     showCheckout: function() {
-      
       this.ShowProduct = !this.ShowProduct;
     },
     SubmitBtn: function() {
@@ -73,25 +70,32 @@ let app = new Vue({
       return this.Cart.length || "0";
     },
     cartTotal() {
-      return this.Cart.reduce((sum, item) => sum + (item.price * item.availability), 0);
+      return this.Cart.reduce(
+        (sum, item) => sum + item.price * item.availability,
+        0
+      );
     },
-  
-   
+
     sortedLessons() {
       let lessonsCopy = this.Product;
       if (this.searchValue) {
-        let searchTermLower = this.searchValue.trim().toLowerCase(); 
+        let searchTermLower = this.searchValue.trim().toLowerCase();
         lessonsCopy = lessonsCopy.filter(item => {
+<<<<<<< HEAD
           const subjectLower = item.subject?.toLowerCase();
           const locationUpper = item.location?.toUpperCase(); 
 
       
+=======
+          const subjectLower = item.subject.toLowerCase();
+          const locationUpper = item.location.toUpperCase();
+>>>>>>> 1b8f50b (issue fixed)
           return (
-            subjectLower?.includes(searchTermLower) ||
-            locationUpper?.includes(searchTermLower)
+            subjectLower.includes(searchTermLower) ||
+            locationUpper.includes(searchTermLower)
           );
         });
-      } 
+      }
       return lessonsCopy.sort((a, b) => {
         let comparison = 0;
         switch (this.sortBy) {
