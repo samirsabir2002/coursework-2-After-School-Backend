@@ -1,10 +1,11 @@
+import { response } from "express";
 import myArray from "./Products.js";
 
 let app = new Vue({
   el: "#app",
   data: {
     sitename: "After School",
-    Product: myArray,
+    Product: [],
     ShowProduct: true,
     Cart: [],
     sortBy: "subject",
@@ -33,29 +34,37 @@ let app = new Vue({
     searchText: "",
     searchResults: []
   },
+  created: function () {
+    fetch("http://localhost:300/collcetion/Products").then(function (res) {
+      response.json().then(function (json) {
+        prodoucts = json;
+        console.log(prodoucts);
+      });
+    });
+  },
 
   methods: {
-    AddToCartBtn: function(product) {
+    AddToCartBtn: function (product) {
       console.log(product);
       this.Cart.push(product);
       product.availability--;
     },
-    removeFromCart: function(item) {
-      const index = this.Cart.findIndex(cartItem => cartItem.id === item.id);
+    removeFromCart: function (item) {
+      const index = this.Cart.findIndex((cartItem) => cartItem.id === item.id);
       if (index !== -1) {
         this.Cart.splice(index, 1);
       }
     },
-    showCheckout: function() {
+    showCheckout: function () {
       this.ShowProduct = !this.ShowProduct;
     },
-    SubmitBtn: function() {
+    SubmitBtn: function () {
       event.preventDefault();
     },
-    CanAddToCart: function(product) {
+    CanAddToCart: function (product) {
       return product.availability != 0 > this.CartCount(product.id);
     },
-    CartCount: function(product) {
+    CartCount: function (product) {
       let count = 0;
       for (var i = 0; i < this.Cart.length; i++) {
         if (this.Cart[i] === product) {
@@ -66,7 +75,7 @@ let app = new Vue({
     }
   },
   computed: {
-    CartItemCount: function() {
+    CartItemCount: function () {
       return this.Cart.length || "0";
     },
     cartTotal() {
@@ -81,12 +90,6 @@ let app = new Vue({
       if (this.searchValue) {
         let searchTermLower = this.searchValue.trim().toLowerCase();
         lessonsCopy = lessonsCopy.filter(item => {
-<<<<<<< HEAD
-          const subjectLower = item.subject?.toLowerCase();
-          const locationUpper = item.location?.toUpperCase(); 
-
-      
-=======
           const subjectLower = item.subject.toLowerCase();
           const locationUpper = item.location.toUpperCase();
 >>>>>>> 1b8f50b (issue fixed)
