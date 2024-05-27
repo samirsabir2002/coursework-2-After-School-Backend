@@ -92,118 +92,33 @@ let app = new Vue({
         }
       }
       return count;
+    }
+  },
+  computed: {
+    CartItemCount: function () {
+      return this.Cart.length || "0";
     },
-
-    ProcessOrder() {
-      // Process the order and update product inventory
-      let orderArray = [];
-      let len = this.Cart.length;
-
-      // Create an order array from the cart items
-      for (let index = 0; index < len; index++) {
-        orderArray.push({ LessonId: this.Cart[index].id, numberOfSpaces: 1 });
-      }
-
-      const newOrder = {
-        name: "Sameer",
-        phone: "03123113",
-        orderitems: orderArray
-      };
-
-      // Send the new order to the server
-      fetch("http://localhost:3000/collection/orders", {
-        method: "Post",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newOrder)
-      })
-        .then((res) => res.json())
-        .then((resjson) => {
-          console.log("🚀 ~ ProcessOrder ~ resjson:", resjson);
-        });
-
-      // Update the product inventory on the server
-      for (let index = 0; index < len; index++) {
-        this.UpdateProduct(this.items[index]._id, 1);
-      }
-
-      // Clear the cart and items arrays
-      this.items = [];
-      this.Cart = [];
-      this.orderArray = [];
-
-      // Refresh the product data from the server
-      fetch("http://localhost:3000/collection/products").then((res) =>
-        res.json().then((json) => {
-          app.Product = json;
-          console.log("🚀 ~ ProcessOrder ~ app.Product = json:", app.Product);
-        })
+    cartTotal() {
+      return this.Cart.reduce(
+        (sum, item) => sum + item.price * item.availability,
+        0
       );
     },
 
-    UpdateProduct(id, spaceValue) {
-      // Update the product inventory on the server
-      const attributeValue = "availableSpace";
-
-      fetch(
-        `http://localhost:3000/collection/products/${id}/reduce/${attributeValue}/${spaceValue}`,
-        {
-          method: "Put",
-          headers: {
-            "Content-Type": "application/json",
-            mode: "no-cors"
-          }
-        }
-      )
-        .then((res) => res.json)
-        .then((resjson) =>
-          console.log("🚀 ~ UpdateProduct ~ resjson:", resjson)
-        );
-    },
-
-    ServerImage(img) {
-      // Construct the full URL for an image
-      const NodeServerUrl = "http://localhost:3000";
-      const Image = img.split("/").pop().trim();
-      const FullPath = NodeServerUrl + "/" + Image;
-      return FullPath;
-    },
-
-    Searching() {
-      // Perform a search based on the search input
-      let searchTerm = this.search.toLowerCase();
-      fetch("http://localhost:3000/collection/products/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query: searchTerm })
-      }).then(function (response) {
-        response.json().then(function (json) {
-          app.Product = json;
-        });
-      });
-    }
-  },
-
-  computed: {
     sortedLessons() {
       let lessonsCopy = this.Product;
       if (this.searchValue) {
         let searchTermLower = this.searchValue.trim().toLowerCase();
-        fetch("http://localhost:3000/collection/products/search", {
-          method: "Post",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ searchvalue: searchTermLower })
-        })
-          .then((res) => res.json())
-          .then((resjson) => {
-            console.log("🚀 ~ ProcessOrder ~ resjson:", resjson);
-            app.Product = resjson;
-          });
+        lessonsCopy = lessonsCopy.filter((item) => {
+          const subjectLower = item.subject?.toLowerCase();
+          const locationUpper = item.location?.toUpperCase();
+          n;
+
+          return (
+            subjectLower?.includes(searchTermLower) ||
+            locationUpper?.includes(searchTermLower)
+          );
+        });
       }
       return lessonsCopy.sort((a, b) => {
         let comparison = 0;
