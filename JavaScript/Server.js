@@ -109,6 +109,34 @@ app.put("/collection/:collectionName", async (req, res, next) => {
     console.error("Error accessing collection:", error);
   }
 });
+
+app.post("/collection/:collectionName/search", async (req, res, next) => {
+  try {
+    if (!db) {
+      throw new Error("Databse is not  connceted");
+    }
+
+    if (!req.collection) {
+      throw new Error("Collection not found");
+    }
+    let query = new RegExp(req.body.searchvalue.trim(), "i");
+    req.collection
+      .find({
+        $or: [
+          {
+            subject: { $regex: query },
+            location: { $regex: query }
+          }
+        ]
+      })
+      .toArray((e, result) => {
+        console.log("🚀 ~ app.put ~ result:", result);
+        res.send(result);
+      });
+  } catch (error) {
+    console.error("Error accessing collection:", error);
+  }
+});
 app.put(
   "/collection/:collectionName/:id/reduce/:attributeValue/:spaceValue",
   async (req, res, next) => {
@@ -142,7 +170,7 @@ app.use((req, res, next) => {
   var Imagepath = path.join(__dirname, "../Images", req.url);
   fs.stat(Imagepath, (err, fileinfo) => {
     if (err) {
-      console.error("File not found:", imagePath);
+      console.error("File not found:", Imagepath);
       next();
       return;
     }

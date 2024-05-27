@@ -150,7 +150,7 @@ let app = new Vue({
     },
     ServerImage(img) {
       const NodeServerUrl = "http://localhost:3000";
-      const Image = img.split("/").pop();
+      const Image = img.split("/").pop().trim();
       const FullPath = NodeServerUrl + "/" + Image;
       return FullPath;
     }
@@ -170,14 +170,18 @@ let app = new Vue({
       let lessonsCopy = this.Product;
       if (this.searchValue) {
         let searchTermLower = this.searchValue.trim().toLowerCase();
-        lessonsCopy = lessonsCopy.filter((item) => {
-          const subjectLower = item.subject.toLowerCase();
-          const locationUpper = item.location.toUpperCase();
-          return (
-            subjectLower.includes(searchTermLower) ||
-            locationUpper.includes(searchTermLower)
-          );
-        });
+        fetch("http://localhost:3000/collection/products/search", {
+          method: "Post",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ searchvalue: searchTermLower })
+        })
+          .then((res) => res.json())
+          .then((resjson) => {
+            console.log("🚀 ~ ProcessOrder ~ resjson:", resjson);
+            app.Product = resjson;
+          });
       }
       return lessonsCopy.sort((a, b) => {
         let comparison = 0;
