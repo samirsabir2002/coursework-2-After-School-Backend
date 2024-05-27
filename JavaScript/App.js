@@ -1,6 +1,3 @@
-import { response } from "express";
-import myArray from "./Products.js";
-
 let app = new Vue({
   el: "#app",
   data: {
@@ -13,6 +10,7 @@ let app = new Vue({
     searchValue: "",
     name: "",
     phone: "",
+    items: [],
     Order: {
       FirstName: "",
       Lastname: "",
@@ -35,20 +33,26 @@ let app = new Vue({
     searchResults: []
   },
   created: function () {
-    fetch("http://localhost:300/collcetion/Products").then(function (res) {
-      response.json().then(function (json) {
-        prodoucts = json;
-        console.log(prodoucts);
+    try {
+      fetch("http://localhost:3000/collection/products").then(function (res) {
+        res.json().then(function (json) {
+          app.Product = json;
+          console.log(app.Product);
+        });
       });
-    });
+    } catch (ex) {
+      console.error("🚀 ~ ex:", ex);
+    }
   },
 
   methods: {
     AddToCartBtn: function (product) {
       console.log(product);
       this.Cart.push(product);
+      this.item.push(product);
       product.availability--;
     },
+
     removeFromCart: function (item) {
       const index = this.Cart.findIndex((cartItem) => cartItem.id === item.id);
       if (index !== -1) {
@@ -72,6 +76,59 @@ let app = new Vue({
         }
       }
       return count;
+    },
+    ProcessOrder() {
+      let orderArray = [];
+
+      let len = this.Cart.length;
+
+      for (let index = 0; index < len; index++) {
+        orderArray.push({ LessonId: this.Cart[index], numberOfSpaces: 1 });
+      }
+
+      // const newOrder = {
+      //   name: this.customerdetails.name,
+      //   phone: this.customerdetails.name,
+      //   orderitems: orderArray
+      // };
+
+      const newOrder = {
+        name: "Sameer",
+        phone: "03123113",
+        orderitems: orderArray
+      };
+      fetch("http://localhost:3000/collection/orders", {
+        method: "Post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newOrder)
+      })
+        .then((res) => res.json())
+        .then((resjson) => {
+          console.log("🚀 ~ ProcessOrder ~ resjson:", resjson);
+        });
+
+      for (let index = 0; index < len; index++) {
+        this.UpdateProduct(this.item[index]._id, 1);
+      }
+      this.item = [];
+      this.cart = [];
+      this.orderArray = [];
+
+      fetch("http://localhost:3000/collection/orders").then((res) =>
+        res
+          .json()
+          .then(
+            (json) => (
+              (app.Product = json),
+              console.log(
+                "🚀 ~ ProcessOrder ~ app.Product = json:",
+                (app.Product = json)
+              )
+            )
+          )
+      );
     }
   },
   computed: {
