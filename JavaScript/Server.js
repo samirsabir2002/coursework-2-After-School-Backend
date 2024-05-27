@@ -2,7 +2,7 @@ const express = require("express");
 const http = require("http");
 const mongodb = require("mongodb").MongoClient;
 const connectStringUri =
-  "mongodb+srv://sameerdb:samir123@cluster0.nueoqmp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://sameerdb:samir123@cluster0.nueoqmp.mongodb.net/";
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
@@ -26,7 +26,7 @@ app.use(function (req, res, next) {
 });
 
 let db;
-let collection;
+// let collection;
 
 mongodb.connect(connectStringUri).then((client) => {
   try {
@@ -43,30 +43,68 @@ app.get("/", (req, res, next) => {
 
 app.param("collectionName", (req, res, next, collectionName) => {
   try {
-    collection = db.collection(collectionName);
+    req.collection = db.collection(collectionName);
   } catch (ex) {
     console.error("Error accessing collection:", error);
   }
   return next();
 });
 
-app.get("/collection/:collectionName", async (req, res, next) => {
+app.get("/collection/:collectionName", (req, res, next) => {
   try {
     if (!db) {
       throw new Error("Databse is not  connceted");
     }
 
-    if (!collection) {
+    if (!req.collection) {
       throw new Error("Collection not found");
     }
 
-    var result = await collection.find({}).toArray();
-    console.log("🚀 ~ req.collection.find ~ results:", result);
-    res.send(result);
+    req.collection.find({}).toArray((e, result) => {
+      console.log("🚀 ~ req.collection.find ~ results:", result);
+      res.send(result);
+    });
   } catch (error) {
     console.error("Error accessing collection:", error);
   }
 });
+
+app.post("/collection/:collectionName", (req, res, next) => {
+  try {
+    if (!db) {
+      throw new Error("Databse is not  connceted");
+    }
+
+    if (!req.collection) {
+      throw new Error("Collection not found");
+    }
+    req.collection.insert(req.body, (e, result) => {
+      console.log("🚀 ~ req.collection.insert ~ results:" + result.ops);
+      res.send(result.ops);
+    });
+  } catch (error) {
+    console.error("Error accessing collection:", error);
+  }
+});
+
+// app.put("/collection/:collectionName", async (req, res, next) => {
+//   try {
+//     if (!db) {
+//       throw new Error("Databse is not  connceted");
+//     }
+
+//     if (!collection) {
+//       throw new Error("Collection not found");
+//     }
+
+//     let result = await collection.insertOne(req.body);
+//     Json_Result = JSON.stringify(result.insertedId);
+//     console.log("🚀 ~ req.collection.find ~ results:" + Json_Result);
+//     res.send(Json_Result);
+//   } catch (error) {
+//     console.error("Error accessing collection:", error);
+//   }
+// });
 
 const port = process.env.Port || 3000;
 app.listen(port, () => {
