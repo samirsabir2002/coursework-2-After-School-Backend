@@ -138,6 +138,19 @@ app.put(
   }
 );
 
+app.use((req, res, next) => {
+  var Imagepath = path.join(__dirname, "../Images", req.url);
+  fs.stat(Imagepath, (err, fileinfo) => {
+    if (err) {
+      console.error("File not found:", imagePath);
+      next();
+      return;
+    }
+    if (fileinfo.isFile()) res.sendFile(Imagepath);
+    else next();
+  });
+});
+
 const port = process.env.Port || 3000;
 app.listen(port, () => {
   console.log("Server running at localhost:3000");
