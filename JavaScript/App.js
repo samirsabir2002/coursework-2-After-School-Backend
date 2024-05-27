@@ -147,6 +147,12 @@ let app = new Vue({
         .then((resjson) =>
           console.log("🚀 ~ UpdateProduct ~ resjson:", resjson)
         );
+    },
+    ServerImage(img) {
+      const NodeServerUrl = "http://localhost:3000";
+      const Image = img.split("/").pop();
+      const FullPath = NodeServerUrl + "/" + Image;
+      return FullPath;
     }
   },
   computed: {
