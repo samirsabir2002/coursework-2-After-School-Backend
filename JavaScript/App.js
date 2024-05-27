@@ -49,7 +49,7 @@ let app = new Vue({
     AddToCartBtn: function (product) {
       console.log(product);
       this.Cart.push(product);
-      this.item.push(product);
+      this.items.push(product);
       product.availability--;
     },
 
@@ -110,13 +110,13 @@ let app = new Vue({
         });
 
       for (let index = 0; index < len; index++) {
-        this.UpdateProduct(this.item[index]._id, 1);
+        this.UpdateProduct(this.items[index]._id, 1);
       }
-      this.item = [];
-      this.cart = [];
+      this.items = [];
+      this.Cart = [];
       this.orderArray = [];
 
-      fetch("http://localhost:3000/collection/orders").then((res) =>
+      fetch("http://localhost:3000/collection/products").then((res) =>
         res
           .json()
           .then(
@@ -129,6 +129,24 @@ let app = new Vue({
             )
           )
       );
+    },
+    UpdateProduct(id, spaceValue) {
+      const attributeValue = "availableSpace";
+
+      fetch(
+        `http://localhost:3000/collection/products/${id}/reduce/${attributeValue}/${spaceValue}`,
+        {
+          method: "Put",
+          headers: {
+            "Content-Type": "application/json",
+            mode: "no-cors"
+          }
+        }
+      )
+        .then((res) => res.json)
+        .then((resjson) =>
+          console.log("🚀 ~ UpdateProduct ~ resjson:", resjson)
+        );
     }
   },
   computed: {

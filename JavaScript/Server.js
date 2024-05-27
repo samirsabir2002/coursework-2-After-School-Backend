@@ -87,24 +87,56 @@ app.post("/collection/:collectionName", (req, res, next) => {
   }
 });
 
-// app.put("/collection/:collectionName", async (req, res, next) => {
-//   try {
-//     if (!db) {
-//       throw new Error("Databse is not  connceted");
-//     }
+const objectID = require("mongodb").ObjectID;
+app.put("/collection/:collectionName", async (req, res, next) => {
+  try {
+    if (!db) {
+      throw new Error("Databse is not  connceted");
+    }
 
-//     if (!collection) {
-//       throw new Error("Collection not found");
-//     }
+    if (!req.collection) {
+      throw new Error("Collection not found");
+    }
 
-//     let result = await collection.insertOne(req.body);
-//     Json_Result = JSON.stringify(result.insertedId);
-//     console.log("🚀 ~ req.collection.find ~ results:" + Json_Result);
-//     res.send(Json_Result);
-//   } catch (error) {
-//     console.error("Error accessing collection:", error);
-//   }
-// });
+    req.collection.findone(
+      { _id: new objectID(req.params.id) },
+      (e, result) => {
+        console.log("🚀 ~ app.put ~ result:", result);
+        res.send(Json_Result);
+      }
+    );
+  } catch (error) {
+    console.error("Error accessing collection:", error);
+  }
+});
+app.put(
+  "/collection/:collectionName/:id/reduce/:attributeValue/:spaceValue",
+  async (req, res, next) => {
+    try {
+      if (!db) {
+        throw new Error("Databse is not  connceted");
+      }
+
+      if (!req.collection) {
+        throw new Error("Collection not found");
+      }
+
+      req.collection.update(
+        { _id: new objectID(req.params.id) },
+        { $inc: { availability: -1 * parseInt(req.params.spaceValue) } },
+        { safe: true, multi: false },
+        (e, result) => {
+          console.log("🚀 ~ app.put ~ result:", result);
+          res.send(
+            result.result.n === 1 ? { msg: "success" } : { msg: "error" }
+          );
+        }
+      );
+    } catch (error) {
+      console.error("Error accessing collection:", error);
+    }
+  }
+);
 
 const port = process.env.Port || 3000;
 app.listen(port, () => {
