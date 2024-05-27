@@ -150,7 +150,7 @@ let app = new Vue({
     },
     ServerImage(img) {
       const NodeServerUrl = "http://localhost:3000";
-      const Image = img.split("/").pop();
+      const Image = img.split("/").pop().trim();
       const FullPath = NodeServerUrl + "/" + Image;
       return FullPath;
     }
@@ -170,10 +170,9 @@ let app = new Vue({
       let lessonsCopy = this.Product;
       if (this.searchValue) {
         let searchTermLower = this.searchValue.trim().toLowerCase();
-        lessonsCopy = lessonsCopy.filter(item => {
+        lessonsCopy = lessonsCopy.filter((item) => {
           const subjectLower = item.subject.toLowerCase();
           const locationUpper = item.location.toUpperCase();
->>>>>>> 1b8f50b (issue fixed)
           return (
             subjectLower.includes(searchTermLower) ||
             locationUpper.includes(searchTermLower)
