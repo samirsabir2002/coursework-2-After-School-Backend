@@ -6,15 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Vue.js library -->
         <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
-        <!-- Font Awesome library for icons -->
-        <script src="https://kit.fontawesome.com/e118fec662.js" crossorigin="anonymous"></script>
-        <!-- Bootstrap CSS for styling -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        >
+        <!-- Font Awesome -->
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+        <!-- MDB -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.min.css" rel="stylesheet">
+        \
     </head>
     <body class="bg-light">
         <!-- Vue.js application root element -->
@@ -82,39 +81,41 @@
                             </div>
                         </div>
                         <!-- Displaying sorted and filtered lessons -->
-                        <div v-for="item in sortedLessons" class="my-3 col-sm-6 col-md-4" ::key="item.id">
-                            <div class="my-3 col-sm-6 col-md-4 w-100">
+                        <div v-for="item in sortedLessons" class="my-3 col-sm-6 col-lg-4" ::key="item.id">
+                            <div class="my-3 col-sm-6 col-lg-4 w-100">
                                 <div class="card border-0 rounded shadow">
                                     <!-- Lesson image -->
                                     <img v-bind:src="ServerImage(item.picture)" class="card-img-top rounded" alt="...">
                                     <div class="card-body mt-3 mb-3">
                                         <div class="row">
-                                            <div class="col-10">
+                                            <div class="col-12">
                                                 <!-- Lesson details -->
-                                                <h4 class="card-title fw-bold">
-                                                    Subject: {{ item.subject }}
-                                                </h4>
-                                                <p class="card-text fw-bold">
+                                                <p class="card-title ">
+                                                    <span class="fw-bold">Subject:</span>
+                                                    <span> {{ item.subject }}</span>
+                                                </p>
+                                                <!-- <p class="card-text fw-bold">
                                                     <i class="bi bi-star-fill text-warning"></i>
                                                     <i class="bi bi-star-fill text-warning"></i>
                                                     <i class="bi bi-star-fill text-warning"></i>
-                                                    <i class="bi bi-star-fill text-warning"></i>
-                                                    Description: {{ item.description }}
+                                                    <i class="bi bi-star-fill text-warning"></i>-->
+                                                <p class="card-text">
+                                                    <span class="fw-bold">Description:</span>
+                                                    <span class="">{{ item.description }}</span>
                                                 </p>
                                             </div>
-                                            <div class="col-md-10 fw-bold">
-                                                location : {{item.location}}
+                                            <div class="col-12 ">
+                                                <span class="fw-bold">location :</span>
+                                                <span>{{item.location}}</span>
                                             </div>
-                                            <div class="col-md-10 fw-bold">
+                                            <div class="col-12 fw-bold">
                                                 available Inventory : {{item.availability}}
-                                            </div>
-                                            <div class="col-2">
-                                                <i class="bi bi-bookmark-plus fs-2"></i>
                                             </div>
                                         </div>
                                         <div class="row align-items-center text-start g-0">
-                                            <div class="col-md-12">
-                                                <h5>Price: {{ item.price }}AED</h5>
+                                            <div class="col-12">
+                                                <span>Price:</span>
+                                                <span>{{ item.price }}AED</span>
                                             </div>
                                         </div>
                                         <!-- Add to cart button -->
@@ -242,12 +243,10 @@
         </div>
     </body>
 </html>
-<!-- Bootstrap JS and Popper.js for Bootstrap components functionality -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>
 <!-- Vue.js application scripts -->
 <script type="module" src="JavaScript/App.js"></script>
-<script type="module" src="JavaScript/Products.js"></script>
 <!-- Custom CSS for banner -->
 <style>
   .banner {
