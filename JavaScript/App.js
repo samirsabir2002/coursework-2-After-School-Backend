@@ -29,7 +29,7 @@ let app = new Vue({
       AL: "Alabama",
       AR: "Arizona",
       CA: "California",
-      NV: "Neveda"
+      NV: "Nevada"
     },
     searchText: "", // Search text
     searchResults: [] // Search results
@@ -50,18 +50,36 @@ let app = new Vue({
 
   methods: {
     AddToCartBtn: function (product) {
-      // Add a product to the cart and decrement its availability
-      console.log(product);
-      this.Cart.push(product);
-      this.items.push(product);
+      // Check if the product already exists in the cart
+      let cartProduct = this.Cart.find((item) => item.id === product.id);
+
+      if (cartProduct) {
+        // If it exists, increment its quantity
+        cartProduct.quantity++;
+      } else {
+        // If it's a new product, add it to the cart with quantity 1
+        this.Cart.push({ ...product, quantity: 1 });
+      }
+
+      // Decrement product availability
       product.availability--;
     },
 
     removeFromCart: function (item) {
-      // Remove an item from the cart
+      // Find the item in the cart
       const index = this.Cart.findIndex((cartItem) => cartItem.id === item.id);
+
       if (index !== -1) {
-        this.Cart.splice(index, 1);
+        // If the item's quantity is greater than 1, decrement its quantity
+        if (this.Cart[index].quantity > 1) {
+          this.Cart[index].quantity--;
+        } else {
+          // If the quantity is 1, remove the item from the cart
+          this.Cart.splice(index, 1);
+        }
+
+        // Increment product availability
+        item.availability++;
       }
     },
 
@@ -70,7 +88,7 @@ let app = new Vue({
       this.ShowProduct = !this.ShowProduct;
     },
 
-    SubmitBtn: function () {
+    SubmitBtn: function (event) {
       // Prevent form submission
       event.preventDefault();
     },
@@ -85,34 +103,28 @@ let app = new Vue({
 
     CartCount: function (product) {
       // Count the number of occurrences of a product in the cart
-      let count = 0;
-      for (var i = 0; i < this.Cart.length; i++) {
-        if (this.Cart[i] === product) {
-          count++;
-        }
-      }
-      return count;
+      let cartProduct = this.Cart.find((item) => item.id === product.id);
+      return cartProduct ? cartProduct.quantity : 0;
     },
 
     ProcessOrder() {
       // Process the order and update product inventory
       let orderArray = [];
-      let len = this.Cart.length;
 
       // Create an order array from the cart items
-      for (let index = 0; index < len; index++) {
-        orderArray.push({ LessonId: this.Cart[index].id, numberOfSpaces: 1 });
-      }
+      this.Cart.forEach((item) => {
+        orderArray.push({ LessonId: item.id, numberOfSpaces: item.quantity });
+      });
 
       const newOrder = {
-        name: "Sameer",
-        phone: "03123113",
+        name: this.name,
+        phone: this.phone,
         orderitems: orderArray
       };
 
       // Send the new order to the server
       fetch("http://localhost:3000/collection/orders", {
-        method: "Post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
@@ -124,14 +136,12 @@ let app = new Vue({
         });
 
       // Update the product inventory on the server
-      for (let index = 0; index < len; index++) {
-        this.UpdateProduct(this.items[index]._id, 1);
-      }
+      this.Cart.forEach((item) => {
+        this.UpdateProduct(item.id, item.quantity);
+      });
 
-      // Clear the cart and items arrays
-      this.items = [];
+      // Clear the cart
       this.Cart = [];
-      this.orderArray = [];
 
       // Refresh the product data from the server
       fetch("http://localhost:3000/collection/products").then((res) =>
@@ -144,19 +154,17 @@ let app = new Vue({
 
     UpdateProduct(id, spaceValue) {
       // Update the product inventory on the server
-      const attributeValue = "availableSpace";
-
       fetch(
-        `http://localhost:3000/collection/products/${id}/reduce/${attributeValue}/${spaceValue}`,
+        `http://localhost:3000/collection/products/${id}/reduce/availableSpace/${spaceValue}`,
         {
-          method: "Put",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             mode: "no-cors"
           }
         }
       )
-        .then((res) => res.json)
+        .then((res) => res.json())
         .then((resjson) =>
           console.log("🚀 ~ UpdateProduct ~ resjson:", resjson)
         );
@@ -184,6 +192,9 @@ let app = new Vue({
           app.Product = json;
         });
       });
+    },
+    itemTotalPrice(item) {
+      return (item.price * item.quantity).toFixed(2);
     }
   },
 
@@ -213,15 +224,20 @@ let app = new Vue({
 
     CartItemCount: function () {
       // Calculate the number of items in the cart
-      return this.Cart.length || "0";
+      return this.Cart.reduce((count, item) => count + item.quantity, 0);
     },
 
     cartTotal() {
       // Calculate the total price of items in the cart
       return this.Cart.reduce(
-        (sum, item) => sum + item.price * item.availability,
+        (sum, item) => sum + item.price * item.quantity,
         0
-      );
+      ).toFixed(2);
+    },
+
+    totalProductsAdded() {
+      // Calculate the total number of distinct products in the cart
+      return this.Cart.length;
     }
   }
 });
