@@ -158,13 +158,13 @@
                                                             </a>
                                                         </h5>
                                                         <hr>
-                                                        <div class="d-flex justify-content-between align-items-center mb-4">
-                                                            <div>
-                                                                <p class="mb-1">Shopping cart</p>
-                                                                <p class="mb-0">You have {{ CartItemCount }} items in your cart</p>
-                                                            </div>
-                                                        </div>
                                                         <div v-if="Cart.length">
+                                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                                <div>
+                                                                    <p class="mb-1">Shopping cart</p>
+                                                                    <p class="mb-0">You have {{ CartItemCount }} items in your cart</p>
+                                                                </div>
+                                                            </div>
                                                             <div v-for="item in Cart" :key="item.id">
                                                                 <div class="card mb-3">
                                                                     <div class="card-body">
@@ -197,6 +197,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            <!-- Message when cart is empty -->
+                                                            <p>Your cart is empty.</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-5">
