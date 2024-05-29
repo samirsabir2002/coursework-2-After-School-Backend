@@ -204,12 +204,14 @@
                                                             <div class="card-body">
                                                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                                                     <h5 class="mb-0">User details</h5>
-                                                                    <img
-                                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                                                        class="img-fluid rounded-3"
-                                                                        style="width: 45px;"
-                                                                        alt="Avatar"
-                                                                    >
+                                                                    <div class="bg-white rounded">
+                                                                        <img
+                                                                            src="Images/visualhunter-1d714a7743.png"
+                                                                            class="img-fluid rounded-3"
+                                                                            style="width: 45px;"
+                                                                            alt="Avatar"
+                                                                        >
+                                                                    </div>
                                                                 </div>
                                                                 <form class="mt-4">
                                                                     <div data-mdb-input-init class="form-outline form-white mb-4">
@@ -242,10 +244,12 @@
                                                                     <p class="mb-2">AED {{ cartTotal }}</p>
                                                                 </div>
                                                                 <button
+                                                                    data-mdb-ripple-init
+                                                                    data-mdb-modal-init
                                                                     :disabled="!name || !phone"
                                                                     type="button"
-                                                                    data-mdb-button-init
-                                                                    data-mdb-ripple-init
+                                                                    data-mdb-toggle="modal"
+                                                                    data-mdb-target="#placeordermodal"
                                                                     class="btn btn-info btn-block btn-lg"
                                                                     v-on:click="ProcessOrder"
                                                                 >
@@ -264,54 +268,51 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
-                            <div v-else>
-                                <!-- Message when cart is empty -->
-                                <p>Your cart is empty.</p>
+                                    <!-- Order confirmation modal -->
+                                    <!-- Modal -->
+                                    <div
+                                        class="modal fade"
+                                        id="placeordermodal"
+                                        tabindex="-1"
+                                        aria-labelledby="placeordermodalLabel"
+                                        aria-hidden="true"
+                                    >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="placeordermodalLabel">Order Confirmation</h5>
+                                                    <button
+                                                        type="button"
+                                                        class="btn-close"
+                                                        data-mdb-dismiss="modal"
+                                                        aria-label="Close"
+                                                    ></button>
+                                                </div>
+                                                <div class="modal-body">Order Confirmed Successfully</div>
+                                                <div class="modal-footer">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary"
+                                                        data-mdb-dismiss="modal"
+                                                        v-on:click="ShowHomePageBtn()"
+                                                    >Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Order confirmation modal -->
-            <div
-                class="modal fade"
-                id="placeordermodal"
-                tabindex="-1"
-                aria-labelledby="placeordermodalLabel"
-                aria-hidden="true"
-            >
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="placeordermodalLabel">
-                                Order Confirmation
-                            </h1>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body">Order Has Been Placed</div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
-</html>
-<!-- MDB -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>
-<script type="module" src="JavaScript/App.js"></script>
-<!-- Custom CSS for banner -->
-<style>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.0/mdb.umd.min.js"></script>
+    <script type="module" src="JavaScript/App.js"></script>
+    <!-- Custom CSS for banner -->
+    <style>
   .banner {
     background-size: cover;
     width: 100%;
@@ -321,4 +322,5 @@
   .banner img {
     width: 100%;
   }
-</style>
+    </style>
+</html>

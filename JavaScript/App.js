@@ -195,6 +195,20 @@ let app = new Vue({
     },
     itemTotalPrice(item) {
       return (item.price * item.quantity).toFixed(2);
+    },
+    ShowHomePageBtn: function () {
+      // Toggle the view between the product list and the checkout page
+      try {
+        fetch("http://localhost:3000/collection/products").then(function (res) {
+          res.json().then(function (json) {
+            app.Product = json;
+            console.log(app.Product);
+          });
+        });
+        this.ShowProduct = !this.ShowProduct;
+      } catch (ex) {
+        console.error("🚀 ~ ex:", ex);
+      }
     }
   },
 
