@@ -113,7 +113,7 @@ let app = new Vue({
 
       // Create an order array from the cart items
       this.Cart.forEach((item) => {
-        orderArray.push({ LessonId: item.id, numberOfSpaces: item.quantity });
+        orderArray.push({ LessonId: item._id, numberOfSpaces: item.quantity });
       });
 
       const newOrder = {
@@ -137,7 +137,7 @@ let app = new Vue({
 
       // Update the product inventory on the server
       this.Cart.forEach((item) => {
-        this.UpdateProduct(item.id, item.quantity);
+        this.UpdateProduct(item._id, item.quantity);
       });
 
       // Clear the cart
