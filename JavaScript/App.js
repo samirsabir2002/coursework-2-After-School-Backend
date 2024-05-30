@@ -196,6 +196,7 @@ let app = new Vue({
     itemTotalPrice(item) {
       return (item.price * item.quantity).toFixed(2);
     },
+
     ShowHomePageBtn: function () {
       // Toggle the view between the product list and the checkout page
       try {

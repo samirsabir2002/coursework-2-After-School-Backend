@@ -221,25 +221,28 @@
                                                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                                                         <input
                                                                             type="text"
-                                                                            id="typeName"
+                                                                            id="nameInput"
                                                                             class="form-control form-control-lg"
-                                                                            placeholder="User Email"
+                                                                            placeholder="Name"
                                                                             v-model.trim="name"
                                                                             required
-                                                                            placeholder="Email"
                                                                         >
-                                                                        <label class="form-label" for="typeName">User Email</label>
+                                                                        <label class="form-label" for="nameInput">Name</label>
+                                                                        <span id="nameMsg" class="text-danger"></span>
+                                                                        <!-- Error message display -->
                                                                     </div>
                                                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                                                         <input
-                                                                            type="text"
-                                                                            v-model.number="phone"
-                                                                            id="typeText"
+                                                                            type="number"
+                                                                            id="phoneInput"
                                                                             class="form-control form-control-lg"
+                                                                            v-model.number="phone"
                                                                             required
                                                                             placeholder="Phone Number"
                                                                         >
-                                                                        <label class="form-label" for="typeText">Phone Number</label>
+                                                                        <label class="form-label" for="phoneInput">Phone Number</label>
+                                                                        <span id="phoneMsg" class="text-danger"></span>
+                                                                        <!-- Error message display -->
                                                                     </div>
                                                                 </form>
                                                                 <hr class="my-4">
