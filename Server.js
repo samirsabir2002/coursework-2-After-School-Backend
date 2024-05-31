@@ -174,7 +174,7 @@ app.put(
 
 // Middleware to serve images
 app.use((req, res, next) => {
-  var Imagepath = path.join(__dirname, "../Images", req.url); // Construct the image path
+  var Imagepath = path.join(__dirname, "Images", req.url); // Construct the image path
   fs.stat(Imagepath, (err, fileinfo) => {
     if (err) {
       console.error("File not found:", Imagepath); // Log if file is not found

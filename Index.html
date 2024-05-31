@@ -52,6 +52,9 @@
                                 <h2>Lessons</h2>
                                 <div class="row align-items-center mb-3">
                                     <!-- Sorting options -->
+                                    <div class="col-1">
+                                        <p class="fw-bold my-auto"> Sort By</p>
+                                    </div>
                                     <div class="col-md-3">
                                         <select v-model="sortBy" class="form-select form-select-sm">
                                             <option value="subject">Subject</option>
@@ -67,7 +70,7 @@
                                         </select>
                                     </div>
                                     <!-- Search input -->
-                                    <div class="col-md-6 d-flex align-items-center">
+                                    <div class="col-md-3 d-flex align-items-center">
                                         <div class="input-group">
                                             <input
                                                 type="text"
@@ -128,6 +131,14 @@
                                                     data-mdb-ripple-init
                                                 >
                                                     ADD TO CART
+                                                </a>
+                                                <a
+                                                    v-else="CanAddToCart(item) === 0"
+                                                    href="#"
+                                                    class="btn btn-primary disabled"
+                                                    data-mdb-ripple-init
+                                                >
+                                                    Out of Stock !
                                                 </a>
                                             </div>
                                         </div>
