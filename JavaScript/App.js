@@ -52,6 +52,7 @@ let app = new Vue({
 
   methods: {
     AddToCartBtn: function (product) {
+      event.preventDefault();
       // Check if the product already exists in the cart
       let cartProduct = this.Cart.find((item) => item.id === product.id);
 
