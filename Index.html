@@ -21,7 +21,7 @@
                 <nav class="navbar bg-white shadow">
                     <div class="container">
                         <!-- Brand name displayed from Vue.js data -->
-                        <a class="navbar-brand" href="#" v-text="sitename"></a>
+                        <a class="navbar-brand fw-bolder text-primary" href="#" v-text="sitename"></a>
                         <!-- Cart button with item count -->
                         <button
                             v-on:click="showCheckout()"
@@ -43,97 +43,112 @@
             <div v-if="ShowProduct" class="">
                 <div class="banner">
                     <!-- Banner image -->
-                    <img src="Images/banner.png" alt="Banner Image Description">
+                    <img src="Images/banner.jpg" alt="Banner Image Description">
                 </div>
                 <div class="container my-5">
-                    <div class="row justify-content-evenly">
-                        <div>
-                            <div class="container">
-                                <h2>Lessons</h2>
-                                <div class="row align-items-center mb-3">
-                                    <!-- Sorting options -->
-                                    <div class="col-md-3">
-                                        <select v-model="sortBy" class="form-select form-select-sm">
-                                            <option value="subject">Subject</option>
-                                            <option value="location">Location</option>
-                                            <option value="price">Price</option>
-                                            <option value="spaces">Spaces</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select v-model="sortOrder" class="form-select form-select-sm">
-                                            <option value="asc">Ascending</option>
-                                            <option value="desc">Descending</option>
-                                        </select>
-                                    </div>
-                                    <!-- Search input -->
-                                    <div class="col-md-6 d-flex align-items-center">
-                                        <div class="input-group">
-                                            <input
-                                                type="text"
-                                                v-on:keyup="Searching()"
-                                                v-model="search"
-                                                placeholder="Search Lesson"
-                                                id="search-input"
-                                                class="form-control form-control-sm"
-                                                aria-describedby="searchButton"
-                                            >
+                    <div>
+                        <h2>Lessons</h2>
+                        <div class="row align-items-center mb-3">
+                            <!-- Sorting options -->
+                            <div class="col-md-3">
+                                <select v-model="sortBy" class="form-select form-select-sm">
+                                    <option value="subject">Subject</option>
+                                    <option value="location">Location</option>
+                                    <option value="price">Price</option>
+                                    <option value="spaces">Spaces</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select v-model="sortOrder" class="form-select form-select-sm">
+                                    <option value="asc">Ascending</option>
+                                    <option value="desc">Descending</option>
+                                </select>
+                            </div>
+                            <!-- Search input -->
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="input-group">
+                                    <input
+                                        type="text"
+                                        v-on:keyup="Searching()"
+                                        v-model="search"
+                                        placeholder="Search Lesson"
+                                        id="search-input"
+                                        class="form-control form-control-sm"
+                                        aria-describedby="searchButton"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="sortedLessons.length">
+                        <div class="row justify-content-evenly">
+                            <!-- Displaying sorted and filtered lessons -->
+                            <div v-for="item in sortedLessons" class="my-3 col-sm-6 col-lg-4" :key="item.id">
+                                <div class="my-3 col-sm-6 col-lg-4 w-100">
+                                    <div class="card border-0 rounded shadow">
+                                        <!-- Lesson image -->
+                                        <img v-bind:src="ServerImage(item.picture)" class="card-img-top rounded" alt="...">
+                                        <div class="card-body mt-3 mb-3">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <!-- Lesson details -->
+                                                    <p class="card-title ">
+                                                        <span class="fw-bold">Subject:</span>
+                                                        <span> {{ item.subject }}</span>
+                                                    </p>
+                                                    <p class="card-text">
+                                                        <span class="fw-bold">Description:</span>
+                                                        <span class="">{{ item.description }}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <span class="fw-bold">Location:</span>
+                                                    <span>{{item.location}}</span>
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <span class="fw-bold">Available Inventory:</span>
+                                                    <span>{{item.availability}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center text-start g-0">
+                                                <div class="col-12  ">
+                                                    <span class="fw-bold">Price:</span>
+                                                    <span>{{ item.price }} AED</span>
+                                                </div>
+                                            </div>
+                                            <!-- Add to cart button -->
+                                            <div class="row">
+                                                <div class="col-12 d-grid gap-2 mx-auto">
+                                                    <a
+                                                        v-if="CanAddToCart(item)"
+                                                        v-on:click="AddToCartBtn(item)"
+                                                        href="#"
+                                                        class="btn btn-primary"
+                                                        data-mdb-ripple-init
+                                                        aria-pressed="false"
+                                                    >
+                                                        ADD TO CART
+                                                    </a>
+                                                    <a
+                                                        v-else="CanAddToCart(item) === 0"
+                                                        v-on:click="AddToCartBtn(item)"
+                                                        href="#"
+                                                        class="btn btn-primary disabled"
+                                                        data-mdb-ripple-init
+                                                    >
+                                                        Out Of Stock!
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Displaying sorted and filtered lessons -->
-                        <div v-for="item in sortedLessons" class="my-3 col-sm-6 col-lg-4" :key="item.id">
-                            <div class="my-3 col-sm-6 col-lg-4 w-100">
-                                <div class="card border-0 rounded shadow">
-                                    <!-- Lesson image -->
-                                    <img v-bind:src="ServerImage(item.picture)" class="card-img-top rounded" alt="...">
-                                    <div class="card-body mt-3 mb-3">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <!-- Lesson details -->
-                                                <p class="card-title ">
-                                                    <span class="fw-bold">Subject:</span>
-                                                    <span> {{ item.subject }}</span>
-                                                </p>
-                                                <p class="card-text">
-                                                    <span class="fw-bold">Description:</span>
-                                                    <span class="">{{ item.description }}</span>
-                                                </p>
-                                            </div>
-                                            <div class="col-12 ">
-                                                <span class="fw-bold">Location:</span>
-                                                <span>{{item.location}}</span>
-                                            </div>
-                                            <div class="col-12 ">
-                                                <span class="fw-bold">Available Inventory:</span>
-                                                <span>{{item.availability}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="row align-items-center text-start g-0">
-                                            <div class="col-12  ">
-                                                <span class="fw-bold">Price:</span>
-                                                <span>{{ item.price }} AED</span>
-                                            </div>
-                                        </div>
-                                        <!-- Add to cart button -->
-                                        <div class="row">
-                                            <div class="col-12 d-grid gap-2 mx-auto">
-                                                <a
-                                                    v-if="CanAddToCart(item)"
-                                                    v-on:click="AddToCartBtn(item)"
-                                                    href="#"
-                                                    class="btn btn-primary"
-                                                    data-mdb-ripple-init
-                                                >
-                                                    ADD TO CART
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div v-else="sortedLessons.length === 0" class="col-12 d-flex justify-content-center my-5">
+                        <div class="spinner-grow text-primary " role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
                 </div>
