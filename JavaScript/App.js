@@ -37,7 +37,9 @@ let app = new Vue({
   created: function () {
     // Fetch product data from the server when the app is created
     try {
-      fetch("http://localhost:3000/collection/products").then(function (res) {
+      fetch(
+        "https://coursework-2-after-school.onrender.com/collection/products"
+      ).then(function (res) {
         res.json().then(function (json) {
           app.Product = json;
           console.log(app.Product);
@@ -123,13 +125,16 @@ let app = new Vue({
       };
 
       // Send the new order to the server
-      fetch("http://localhost:3000/collection/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newOrder)
-      })
+      fetch(
+        "https://coursework-2-after-school.onrender.com/collection/orders",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newOrder)
+        }
+      )
         .then((res) => res.json())
         .then((resjson) => {
           console.log("🚀 ~ ProcessOrder ~ resjson:", resjson);
@@ -144,7 +149,9 @@ let app = new Vue({
       this.Cart = [];
 
       // Refresh the product data from the server
-      fetch("http://localhost:3000/collection/products").then((res) =>
+      fetch(
+        "https://coursework-2-after-school.onrender.com/collection/products"
+      ).then((res) =>
         res.json().then((json) => {
           app.Product = json;
           console.log("🚀 ~ ProcessOrder ~ app.Product = json:", app.Product);
@@ -155,7 +162,7 @@ let app = new Vue({
     UpdateProduct(id, spaceValue) {
       // Update the product inventory on the server
       fetch(
-        `http://localhost:3000/collection/products/${id}/reduce/availableSpace/${spaceValue}`,
+        `https://coursework-2-after-school.onrender.com/collection/products/${id}/reduce/availableSpace/${spaceValue}`,
         {
           method: "PUT",
           headers: {
@@ -172,7 +179,7 @@ let app = new Vue({
 
     ServerImage(img) {
       // Construct the full URL for an image
-      const NodeServerUrl = "http://localhost:3000";
+      const NodeServerUrl = "https://coursework-2-after-school.onrender.com";
       const Image = img.split("/").pop().trim();
       const FullPath = NodeServerUrl + "/" + Image;
       return FullPath;
@@ -181,13 +188,16 @@ let app = new Vue({
     Searching() {
       // Perform a search based on the search input
       let searchTerm = this.search.toLowerCase();
-      fetch("http://localhost:3000/collection/products/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query: searchTerm })
-      }).then(function (response) {
+      fetch(
+        "https://coursework-2-after-school.onrender.com/collection/products/search",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ query: searchTerm })
+        }
+      ).then(function (response) {
         response.json().then(function (json) {
           app.Product = json;
         });
@@ -200,7 +210,9 @@ let app = new Vue({
     ShowHomePageBtn: function () {
       // Toggle the view between the product list and the checkout page
       try {
-        fetch("http://localhost:3000/collection/products").then(function (res) {
+        fetch(
+          "https://coursework-2-after-school.onrender.com/collection/products"
+        ).then(function (res) {
           res.json().then(function (json) {
             app.Product = json;
             console.log(app.Product);
